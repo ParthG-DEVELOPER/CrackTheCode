@@ -7,7 +7,7 @@ CampusLoop is a student marketplace built to help students buy, sell, and exchan
 ## Live Demo
 
 * **Deployed App:** https://campusloop.streamlit.app/
-* **YouTube Demo:** [Insert your unlisted YouTube video link here]
+* **YouTube Demo:** [[Insert your unlisted YouTube video link here](https://youtu.be/FvJ7wbj68KM?si=2bYmTY0e6tvIjLS5)]
 
 ## Features
 
