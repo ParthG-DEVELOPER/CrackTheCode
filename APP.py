@@ -1,10 +1,11 @@
+#Import necessary libraries ------------------------------------------------
 import os
 import streamlit as st
 from dotenv import load_dotenv
 from supabase import create_client
 
 load_dotenv()
-
+# Load Supabase credentials from environment variables --------------------------------
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 
@@ -13,7 +14,7 @@ st.set_page_config(
     page_icon="♻️",
     layout="wide",
 )
-
+#Title and description of the app --------------------------------
 st.title("♻️ CampusLoop")
 st.subheader("Your campus. Your community. Reuse more.")
 st.write("Buy, exchange, or give away pre-owned college items.")
@@ -30,7 +31,7 @@ except Exception as e:
     st.error(f"Could not connect to Supabase: {e}")
     st.stop()
 
-
+#Implemented Listing --------------------------------------------------
 def get_listings():
     response = (
         supabase.table("listings")
@@ -53,7 +54,7 @@ with browse_tab:
     except Exception as e:
         st.error(f"Could not load listings: {e}")
         listings = []
-
+#Takes Input from user for search and filter ------------------------------------------------
     search = st.text_input(
      "Search items",
      placeholder="Try books, calculator, backpack...",
@@ -69,7 +70,7 @@ with browse_tab:
       "Sort listings",
       ["Newest first", "Price: low to high", "Price: high to low"],
 )
-
+#Prints the listing even if it is reserved for displaying -------------------------------
     filtered = [
       item for item in listings
       if (
@@ -83,7 +84,7 @@ with browse_tab:
     )
 ]
     
-
+#Sorts the listing --------------------------------------------------
     if sort_by == "Price: low to high":
         filtered.sort(key=lambda x: float(x.get("price") or 0))
     elif sort_by == "Price: high to low":
@@ -136,7 +137,7 @@ with browse_tab:
                                                       "listing_id": item["id"],
                                                        "requester_name": requester.strip(),
                                                        "message": message.strip(),
-                                             }, returning="minimal").execute()
+                                             }, returning="minimal").execute()#Sends only request to the SUPABASE ------------------------------------
                                         st.success("Request sent!")
                                     except Exception as e:
                                         st.error(f"Request failed: {e}")
@@ -160,7 +161,7 @@ with browse_tab:
                             except Exception as e:
                                 st.error(f"Update failed: {e}")
                     st.subheader("Exchange Requests")
-######################
+#Prints the Request information publicaly
                     try:
                      response = (
                         supabase.table("exchange_requests")
